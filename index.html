@@ -3,55 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>My Valentine</title>
+<title>Valentine</title>
 
 <style>
 /* ---------- GLOBAL ---------- */
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Arial;
+    font-family: -apple-system, BlinkMacSystemFont, Arial;
     background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-    overflow-x: hidden;
-    color: #fff;
+    color: white;
 }
 
-.hidden { display: none; }
+.page {
+    display: none;
+    min-height: 100vh;
+    padding: 20px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.page.active {
+    display: flex;
+}
 
 button {
-    padding: 14px 26px;
+    padding: 14px 28px;
     border-radius: 30px;
     border: none;
     font-size: 18px;
-    cursor: pointer;
     margin: 10px;
+    cursor: pointer;
 }
 
-.btn-yes {
+.yes {
     background: #ff4d6d;
     color: white;
 }
 
-.btn-no {
-    background: #555;
+.no {
+    background: #444;
     color: white;
-}
-
-.center {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 20px;
 }
 
 /* ---------- FLOATING TEXT ---------- */
 .floating {
-    position: absolute;
+    position: fixed;
     font-size: 14px;
     opacity: 0.25;
-    animation: float 12s infinite linear;
+    animation: float 12s linear infinite;
 }
 
 @keyframes float {
@@ -59,9 +60,9 @@ button {
     to { transform: translateY(-120vh); }
 }
 
-/* ---------- PAGE 2 ---------- */
-.tiles button {
-    background: rgba(255,255,255,0.85);
+/* ---------- PAGE 3 ---------- */
+.tile {
+    background: rgba(255,255,255,0.9);
     color: #ff4d6d;
     width: 90%;
     max-width: 300px;
@@ -69,104 +70,99 @@ button {
 
 /* ---------- LOVE LETTER ---------- */
 .paper {
-    background: #fff;
+    background: white;
     color: #333;
     padding: 25px;
     max-width: 360px;
     border-radius: 6px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-    font-family: "Georgia", serif;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    font-family: Georgia, serif;
 }
 
 .paper h2 {
-    text-align: center;
     color: #ff4d6d;
 }
 
 .paper img {
     max-width: 100%;
-    border-radius: 6px;
     margin-top: 10px;
+    border-radius: 6px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- FLOATING BACKGROUND TEXT -->
+<!-- FLOATING BACKGROUND WORDS -->
 <script>
-const words = ["Feb 14", "P LOVE S", "Love You", "Hey Cutie", "Forever", "My Heart"];
-for (let i = 0; i < 25; i++) {
-    const span = document.createElement("div");
-    span.className = "floating";
-    span.style.left = Math.random() * 100 + "vw";
-    span.style.animationDuration = 8 + Math.random() * 8 + "s";
-    span.innerText = words[Math.floor(Math.random() * words.length)];
-    document.body.appendChild(span);
+const bgWords = ["Feb 14", "P LOVE S", "Love You", "Hey Cutie", "Forever"];
+for (let i = 0; i < 20; i++) {
+    const el = document.createElement("div");
+    el.className = "floating";
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.animationDuration = 8 + Math.random() * 8 + "s";
+    el.innerText = bgWords[Math.floor(Math.random() * bgWords.length)];
+    document.body.appendChild(el);
 }
 </script>
 
 <!-- PAGE 1 -->
-<div id="page1" class="center">
+<div id="page1" class="page active">
     <h1>Will you be my Valentine? 💖</h1>
     <div>
-        <button class="btn-yes" onclick="goYes()">Yes</button>
-        <button class="btn-no" onclick="goNo()">No</button>
+        <button class="yes" onclick="goTo('page3')">Yes</button>
+        <button class="no" onclick="goTo('page2')">No</button>
     </div>
-    <p id="noText" class="hidden">Sorry, it is not an option 😢</p>
 </div>
 
-<!-- PAGE 2 -->
-<div id="page2" class="center hidden">
+<!-- PAGE 2 : NO -->
+<div id="page2" class="page">
+    <h1>Sorry 😢</h1>
+    <p>That is not an option.</p>
+    <button onclick="goTo('page1')">Go Back</button>
+</div>
+
+<!-- PAGE 3 : YES -->
+<div id="page3" class="page">
     <h2>Tap the love 💕</h2>
-    <div class="tiles">
-        <button onclick="reveal(this)">You look beautiful</button>
-        <button onclick="reveal(this)">Hey cutie</button>
-        <button onclick="reveal(this)">I love your smile</button>
-        <button onclick="reveal(this)">You make my days brighter</button>
-        <button onclick="openLetter()">Open my love letter 💌</button>
-    </div>
+
+    <button class="tile" onclick="this.innerText='You look beautiful 💖'">Click me</button>
+    <button class="tile" onclick="this.innerText='Hey cutie 😘'">Click me</button>
+    <button class="tile" onclick="this.innerText='I love your smile 😊'">Click me</button>
+    <button class="tile" onclick="this.innerText='You make my world better 🌍'">Click me</button>
+
+    <button class="yes" onclick="goTo('page4')">Open Love Letter 💌</button>
 </div>
 
-<!-- PAGE 3 -->
-<div id="page3" class="center hidden">
+<!-- PAGE 4 : LOVE LETTER -->
+<div id="page4" class="page">
     <div class="paper">
         <h2>My Love 💖</h2>
 
         <p>
-        This is where your memories go.<br><br>
-        Write about how you met, your moments, the laughs,
-        the hard days, and why she means everything to you.<br><br>
-        This text is temporary. You will replace it later.
+        This is placeholder text.<br><br>
+        Write your memories here.<br>
+        How you met, your moments, the laughs,
+        the fights, and why she means everything to you.<br><br>
+        You will edit this later.
         </p>
 
-        <input type="file" accept="image/*" onchange="loadPhoto(event)">
-        <img id="photoPreview">
+        <input type="file" accept="image/*" onchange="preview(event)">
+        <img id="previewImg">
     </div>
+
+    <button onclick="goTo('page3')">Back</button>
 </div>
 
 <script>
-function goYes() {
-    page1.classList.add("hidden");
-    page2.classList.remove("hidden");
+function goTo(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
 }
 
-function goNo() {
-    document.getElementById("noText").classList.remove("hidden");
-}
-
-function reveal(btn) {
-    btn.innerText = "💖";
-}
-
-function openLetter() {
-    page2.classList.add("hidden");
-    page3.classList.remove("hidden");
-}
-
-function loadPhoto(event) {
-    const img = document.getElementById("photoPreview");
-    img.src = URL.createObjectURL(event.target.files[0]);
+function preview(event) {
+    document.getElementById("previewImg").src =
+        URL.createObjectURL(event.target.files[0]);
 }
 </script>
 
