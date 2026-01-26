@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Valentine</title>
 
+<!-- ROBOTS NOINDEX -->
+<meta name="robots" content="noindex, nofollow">
+
+<!-- HANDWRITTEN FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+
 <style>
 /* ---------- GLOBAL ---------- */
 body {
@@ -79,6 +85,8 @@ button {
     color: #ff4d6d;
     width: 90%;
     max-width: 320px;
+    font-size: 20px;
+    font-family: "Indie Flower", cursive;
 }
 
 /* ---------- LOVE LETTER ---------- */
@@ -87,19 +95,22 @@ button {
     color: #333;
     padding: 25px;
     max-width: 360px;
-    border-radius: 6px;
+    border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    font-family: Georgia, serif;
+    font-family: "Indie Flower", cursive;
     text-align: left;
+    font-size: 22px;
 }
 
 .paper h2 {
     color: #ff4d6d;
     text-align: center;
+    font-size: 30px;
 }
 
 .paper p {
     line-height: 1.5;
+    font-size: 22px;
 }
 
 /* ---------- MEMORY GALLERY ---------- */
@@ -108,14 +119,15 @@ button {
     flex-direction: column;
     gap: 12px;
     width: 90%;
-    max-width: 380px;
+    max-width: 420px;
     text-align: left;
+    font-family: "Indie Flower", cursive;
 }
 
 .memory {
     background: rgba(255,255,255,0.9);
     color: #333;
-    border-radius: 10px;
+    border-radius: 14px;
     padding: 14px;
     box-shadow: 0 6px 16px rgba(0,0,0,0.2);
 }
@@ -123,6 +135,20 @@ button {
 .memory h3 {
     margin: 0;
     color: #ff4d6d;
+    font-size: 26px;
+}
+
+.memory p {
+    margin: 6px 0 0;
+    font-size: 22px;
+}
+
+/* ---------- PHOTOS ---------- */
+.photo {
+    width: 100%;
+    border-radius: 14px;
+    margin-top: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
 }
 </style>
 </head>
@@ -149,8 +175,10 @@ for (let i = 0; i < 20; i++) {
 
 <!-- PAGE 1 -->
 <div id="page1" class="page active">
-    <h1 class="heartbeat">Will you be my Valentine? 💖</h1>
-    <p>Hissi, this is for you.</p>
+    <h1 class="heartbeat" style="font-family: 'Indie Flower', cursive; font-size: 42px;">
+        Will you be my Valentine? 💖
+    </h1>
+    <p style="font-size: 24px; font-family: 'Indie Flower', cursive;">Hissi, this is for you.</p>
     <div>
         <button class="yes" onclick="startMusic(); goTo('page3')">Yes</button>
         <button class="no" onclick="startMusic(); goTo('page2')">No</button>
@@ -159,15 +187,15 @@ for (let i = 0; i < 20; i++) {
 
 <!-- PAGE 2 : NO -->
 <div id="page2" class="page">
-    <h1>Sorry 😢</h1>
-    <p>That is not an option.</p>
-    <p>My heart already chose you.</p>
+    <h1 style="font-family: 'Indie Flower', cursive; font-size: 44px;">Sorry 😢</h1>
+    <p style="font-family: 'Indie Flower', cursive; font-size: 24px;">That is not an option.</p>
+    <p style="font-family: 'Indie Flower', cursive; font-size: 24px;">My heart already chose you.</p>
     <button onclick="goTo('page1')">Go Back</button>
 </div>
 
 <!-- PAGE 3 : YES -->
 <div id="page3" class="page">
-    <h2>Tap the love 💕</h2>
+    <h2 style="font-family: 'Indie Flower', cursive; font-size: 34px;">Tap the love 💕</h2>
 
     <button class="tile" onclick="reveal(this, 'The way you smile when you’re happy 💖')">Click me</button>
     <button class="tile" onclick="reveal(this, 'That day we laughed endlessly 😄')">Click me</button>
@@ -192,6 +220,7 @@ for (let i = 0; i < 20; i++) {
         Even though we have been in a long-distance relationship for 2 years, I can still remember the feeling you give me:
         your touch, your smell, your eyes, your smile — everything about you.
         </p>
+        <img src="loveletter.jpg" alt="Love Letter Photo" class="photo">
         <p style="margin-top: 18px;">
         Always yours,<br>
         <b>Yejju</b>
@@ -204,19 +233,27 @@ for (let i = 0; i < 20; i++) {
 
 <!-- PAGE 5 : MEMORY GALLERY -->
 <div id="page5" class="page">
-    <h2>Our Memories</h2>
+    <h2 style="font-family: 'Indie Flower', cursive; font-size: 34px;">Our Memories</h2>
     <div class="gallery">
         <div class="memory">
             <h3>Memory 1</h3>
-            <p>Placeholder for your first memory photo and caption.</p>
+            <p>Caption for memory 1.</p>
+            <img src="memory1.jpg" alt="Memory 1" class="photo">
         </div>
         <div class="memory">
             <h3>Memory 2</h3>
-            <p>Placeholder for your second memory photo and caption.</p>
+            <p>Caption for memory 2.</p>
+            <img src="memory2.jpg" alt="Memory 2" class="photo">
         </div>
         <div class="memory">
             <h3>Memory 3</h3>
-            <p>Placeholder for your third memory photo and caption.</p>
+            <p>Caption for memory 3.</p>
+            <img src="memory3.jpg" alt="Memory 3" class="photo">
+        </div>
+        <div class="memory">
+            <h3>Memory 4</h3>
+            <p>Caption for memory 4.</p>
+            <img src="memory4.jpg" alt="Memory 4" class="photo">
         </div>
     </div>
 
@@ -226,8 +263,8 @@ for (let i = 0; i < 20; i++) {
 
 <!-- PAGE 6 : PROMISES -->
 <div id="page6" class="page">
-    <h2>My Promises</h2>
-    <div class="paper">
+    <h2 style="font-family: 'Indie Flower', cursive; font-size: 34px;">My Promises</h2>
+    <div class="paper" style="font-size: 24px;">
         <p>• I promise to make you happy forever.</p>
         <p>• I promise to grow together with you.</p>
     </div>
@@ -237,8 +274,8 @@ for (let i = 0; i < 20; i++) {
 
 <!-- PAGE 7 : FINAL MESSAGE -->
 <div id="page7" class="page">
-    <h1>YU are my favorite place.</h1>
-    <p>I love you. Always.</p>
+    <h1 style="font-family: 'Indie Flower', cursive; font-size: 40px;">You are my favorite place.</h1>
+    <p style="font-family: 'Indie Flower', cursive; font-size: 26px;">I love you. Always.</p>
     <button class="yes" onclick="goTo('page1')">Replay</button>
 </div>
 
