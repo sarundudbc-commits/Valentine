@@ -12,6 +12,7 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, Arial;
     background: linear-gradient(135deg, #ff9a9e, #fad0c4);
     color: white;
+    overflow-x: hidden;
 }
 
 .page {
@@ -60,12 +61,24 @@ button {
     to { transform: translateY(-120vh); }
 }
 
+/* ---------- HEARTBEAT ---------- */
+.heartbeat {
+    animation: heartbeat 1.6s infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.05); }
+    50% { transform: scale(1.1); }
+    75% { transform: scale(1.05); }
+}
+
 /* ---------- PAGE 3 ---------- */
 .tile {
     background: rgba(255,255,255,0.9);
     color: #ff4d6d;
     width: 90%;
-    max-width: 300px;
+    max-width: 320px;
 }
 
 /* ---------- LOVE LETTER ---------- */
@@ -77,16 +90,39 @@ button {
     border-radius: 6px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     font-family: Georgia, serif;
+    text-align: left;
 }
 
 .paper h2 {
     color: #ff4d6d;
+    text-align: center;
 }
 
-.paper img {
-    max-width: 100%;
-    margin-top: 10px;
-    border-radius: 6px;
+.paper p {
+    line-height: 1.5;
+}
+
+/* ---------- MEMORY GALLERY ---------- */
+.gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 90%;
+    max-width: 380px;
+    text-align: left;
+}
+
+.memory {
+    background: rgba(255,255,255,0.9);
+    color: #333;
+    border-radius: 10px;
+    padding: 14px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+.memory h3 {
+    margin: 0;
+    color: #ff4d6d;
 }
 </style>
 </head>
@@ -106,12 +142,18 @@ for (let i = 0; i < 20; i++) {
 }
 </script>
 
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
 <!-- PAGE 1 -->
 <div id="page1" class="page active">
-    <h1>Will you be my Valentine? 💖</h1>
+    <h1 class="heartbeat">Will you be my Valentine? 💖</h1>
+    <p>Hissi, this is for you.</p>
     <div>
-        <button class="yes" onclick="goTo('page3')">Yes</button>
-        <button class="no" onclick="goTo('page2')">No</button>
+        <button class="yes" onclick="startMusic(); goTo('page3')">Yes</button>
+        <button class="no" onclick="startMusic(); goTo('page2')">No</button>
     </div>
 </div>
 
@@ -119,6 +161,7 @@ for (let i = 0; i < 20; i++) {
 <div id="page2" class="page">
     <h1>Sorry 😢</h1>
     <p>That is not an option.</p>
+    <p>My heart already chose you.</p>
     <button onclick="goTo('page1')">Go Back</button>
 </div>
 
@@ -126,10 +169,9 @@ for (let i = 0; i < 20; i++) {
 <div id="page3" class="page">
     <h2>Tap the love 💕</h2>
 
-    <button class="tile" onclick="this.innerText='You look beautiful 💖'">Click me</button>
-    <button class="tile" onclick="this.innerText='Hey cutie 😘'">Click me</button>
-    <button class="tile" onclick="this.innerText='I love your smile 😊'">Click me</button>
-    <button class="tile" onclick="this.innerText='You make my world better 🌍'">Click me</button>
+    <button class="tile" onclick="reveal(this, 'The way you smile when you’re happy 💖')">Click me</button>
+    <button class="tile" onclick="reveal(this, 'That day we laughed endlessly 😄')">Click me</button>
+    <button class="tile" onclick="reveal(this, 'How safe I feel with you 💛')">Click me</button>
 
     <button class="yes" onclick="goTo('page4')">Open Love Letter 💌</button>
 </div>
@@ -138,20 +180,66 @@ for (let i = 0; i < 20; i++) {
 <div id="page4" class="page">
     <div class="paper">
         <h2>My Love 💖</h2>
-
         <p>
-        This is placeholder text.<br><br>
-        Write your memories here.<br>
-        How you met, your moments, the laughs,
-        the fights, and why she means everything to you.<br><br>
-        You will edit this later.
+        The first time I met you, we didn’t even talk. But even then, I knew something in my heart had changed.
+        I believe God had a plan for us to meet again after so long. That is how special you are to me.
         </p>
-
-        <input type="file" accept="image/*" onchange="preview(event)">
-        <img id="previewImg">
+        <p>
+        After my first proposal, and your “yes”, you became my constant. You have always been in my heart,
+        and you will stay there forever. The memories we have shared keep roaming in my mind.
+        </p>
+        <p>
+        Even though we have been in a long-distance relationship for 2 years, I can still remember the feeling you give me:
+        your touch, your smell, your eyes, your smile — everything about you.
+        </p>
+        <p style="margin-top: 18px;">
+        Always yours,<br>
+        <b>Yejju</b>
+        </p>
     </div>
 
+    <button class="yes" onclick="goTo('page5')">See Memories</button>
     <button onclick="goTo('page3')">Back</button>
+</div>
+
+<!-- PAGE 5 : MEMORY GALLERY -->
+<div id="page5" class="page">
+    <h2>Our Memories</h2>
+    <div class="gallery">
+        <div class="memory">
+            <h3>Memory 1</h3>
+            <p>Placeholder for your first memory photo and caption.</p>
+        </div>
+        <div class="memory">
+            <h3>Memory 2</h3>
+            <p>Placeholder for your second memory photo and caption.</p>
+        </div>
+        <div class="memory">
+            <h3>Memory 3</h3>
+            <p>Placeholder for your third memory photo and caption.</p>
+        </div>
+    </div>
+
+    <button class="yes" onclick="goTo('page6')">Promises</button>
+    <button onclick="goTo('page4')">Back</button>
+</div>
+
+<!-- PAGE 6 : PROMISES -->
+<div id="page6" class="page">
+    <h2>My Promises</h2>
+    <div class="paper">
+        <p>• I promise to make you happy forever.</p>
+        <p>• I promise to grow together with you.</p>
+    </div>
+    <button class="yes" onclick="goTo('page7')">Next</button>
+    <button onclick="goTo('page5')">Back</button>
+</div>
+
+<!-- PAGE 7 : FINAL MESSAGE -->
+<div id="page7" class="page">
+    <h1>YU are my favorite place.</h1>
+    <p>I love you. Always.</p>
+    <button class="yes" onclick="goTo('page1')">Replay</button>
 </div>
 
 <script>
@@ -160,9 +248,16 @@ function goTo(pageId) {
     document.getElementById(pageId).classList.add('active');
 }
 
-function preview(event) {
-    document.getElementById("previewImg").src =
-        URL.createObjectURL(event.target.files[0]);
+function reveal(btn, text) {
+    btn.innerText = text;
+    btn.disabled = true;
+}
+
+function startMusic() {
+    const music = document.getElementById("music");
+    if (music.paused) {
+        music.play().catch(() => {});
+    }
 }
 </script>
 
