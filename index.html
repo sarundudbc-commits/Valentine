@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>My Valentine</title>
+
+<style>
+/* ---------- GLOBAL ---------- */
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Arial;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    overflow-x: hidden;
+    color: #fff;
+}
+
+.hidden { display: none; }
+
+button {
+    padding: 14px 26px;
+    border-radius: 30px;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.btn-yes {
+    background: #ff4d6d;
+    color: white;
+}
+
+.btn-no {
+    background: #555;
+    color: white;
+}
+
+.center {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+/* ---------- FLOATING TEXT ---------- */
+.floating {
+    position: absolute;
+    font-size: 14px;
+    opacity: 0.25;
+    animation: float 12s infinite linear;
+}
+
+@keyframes float {
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-120vh); }
+}
+
+/* ---------- PAGE 2 ---------- */
+.tiles button {
+    background: rgba(255,255,255,0.85);
+    color: #ff4d6d;
+    width: 90%;
+    max-width: 300px;
+}
+
+/* ---------- LOVE LETTER ---------- */
+.paper {
+    background: #fff;
+    color: #333;
+    padding: 25px;
+    max-width: 360px;
+    border-radius: 6px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    font-family: "Georgia", serif;
+}
+
+.paper h2 {
+    text-align: center;
+    color: #ff4d6d;
+}
+
+.paper img {
+    max-width: 100%;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- FLOATING BACKGROUND TEXT -->
+<script>
+const words = ["Feb 14", "P LOVE S", "Love You", "Hey Cutie", "Forever", "My Heart"];
+for (let i = 0; i < 25; i++) {
+    const span = document.createElement("div");
+    span.className = "floating";
+    span.style.left = Math.random() * 100 + "vw";
+    span.style.animationDuration = 8 + Math.random() * 8 + "s";
+    span.innerText = words[Math.floor(Math.random() * words.length)];
+    document.body.appendChild(span);
+}
+</script>
+
+<!-- PAGE 1 -->
+<div id="page1" class="center">
+    <h1>Will you be my Valentine? 💖</h1>
+    <div>
+        <button class="btn-yes" onclick="goYes()">Yes</button>
+        <button class="btn-no" onclick="goNo()">No</button>
+    </div>
+    <p id="noText" class="hidden">Sorry, it is not an option 😢</p>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="center hidden">
+    <h2>Tap the love 💕</h2>
+    <div class="tiles">
+        <button onclick="reveal(this)">You look beautiful</button>
+        <button onclick="reveal(this)">Hey cutie</button>
+        <button onclick="reveal(this)">I love your smile</button>
+        <button onclick="reveal(this)">You make my days brighter</button>
+        <button onclick="openLetter()">Open my love letter 💌</button>
+    </div>
+</div>
+
+<!-- PAGE 3 -->
+<div id="page3" class="center hidden">
+    <div class="paper">
+        <h2>My Love 💖</h2>
+
+        <p>
+        This is where your memories go.<br><br>
+        Write about how you met, your moments, the laughs,
+        the hard days, and why she means everything to you.<br><br>
+        This text is temporary. You will replace it later.
+        </p>
+
+        <input type="file" accept="image/*" onchange="loadPhoto(event)">
+        <img id="photoPreview">
+    </div>
+</div>
+
+<script>
+function goYes() {
+    page1.classList.add("hidden");
+    page2.classList.remove("hidden");
+}
+
+function goNo() {
+    document.getElementById("noText").classList.remove("hidden");
+}
+
+function reveal(btn) {
+    btn.innerText = "💖";
+}
+
+function openLetter() {
+    page2.classList.add("hidden");
+    page3.classList.remove("hidden");
+}
+
+function loadPhoto(event) {
+    const img = document.getElementById("photoPreview");
+    img.src = URL.createObjectURL(event.target.files[0]);
+}
+</script>
+
+</body>
+</html>
