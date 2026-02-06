@@ -91,15 +91,16 @@ button {
 
 /* ---------- LOVE LETTER ---------- */
 .paper {
-    background: white;
+     background: #fff7e6;
     color: #333;
     padding: 25px;
     max-width: 360px;
-    border-radius: 10px;
+    border-radius: 14px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     font-family: "Indie Flower", cursive;
     text-align: left;
     font-size: 22px;
+    border: 2px solid #f0d7b8;
 }
 
 .paper h2 {
@@ -150,6 +151,26 @@ button {
     margin-top: 12px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.25);
 }
+
+.hero-img-small {
+    width: 70%;
+    max-width: 220px;
+    border-radius: 12px;
+    margin: 12px auto;
+    display: block;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+
+.hero-media {
+    width: 90%;
+    max-width: 320px;
+    border-radius: 16px;
+    margin: 16px auto;
+    display: block;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+
 </style>
 </head>
 
@@ -178,6 +199,12 @@ for (let i = 0; i < 20; i++) {
     <h1 class="heartbeat" style="font-family: 'Indie Flower', cursive; font-size: 42px;">
         Will you be my Valentine? 💖
     </h1>
+
+    <!-- Looping video under heading -->
+<video class="hero-media" autoplay muted loop playsinline>
+    <source src="propose.mp4" type="video/mp4">
+</video>
+
     <p style="font-size: 24px; font-family: 'Indie Flower', cursive;">Hissi, this is for you.</p>
     <div>
         <button class="yes" onclick="startMusic(); goTo('page3')">Yes</button>
@@ -188,6 +215,7 @@ for (let i = 0; i < 20; i++) {
 <!-- PAGE 2 : NO -->
 <div id="page2" class="page">
     <h1 style="font-family: 'Indie Flower', cursive; font-size: 44px;">Sorry 😢</h1>
+    <img src="boycry.jpg" class="hero-img-small" alt="No Image">
     <p style="font-family: 'Indie Flower', cursive; font-size: 24px;">That is not an option.</p>
     <p style="font-family: 'Indie Flower', cursive; font-size: 24px;">My heart already chose you.</p>
     <button onclick="goTo('page1')">Go Back</button>
@@ -195,9 +223,9 @@ for (let i = 0; i < 20; i++) {
 
 <!-- PAGE 3 : YES -->
 <div id="page3" class="page">
-    <h2 style="font-family: 'Indie Flower', cursive; font-size: 34px;">Tap the love 💕</h2>
+    <h2 style="font-family: 'Indie Flower', cursive; font-size: 34px;">I love the way....... 💕</h2>
 
-    <button class="tile" onclick="reveal(this, 'The way your eyes sparkle when you laugh ✨')">Click me</button>
+    <button class="tile" onclick="reveal(this, 'Your eyes sparkle when you laugh ✨')">Click me</button>
     <button class="tile" onclick="reveal(this, 'You make my world feel calm 🥺')">Click me</button>
     <button class="tile" onclick="reveal(this, 'Your presence makes everything better 🌟')">Click me</button>
 
@@ -263,13 +291,13 @@ for (let i = 0; i < 20; i++) {
         </p>
     </div>
 
-    <button class="yes" onclick="goTo('page5')">See Memories</button>
+    <button class="yes" onclick="goTo('page5')">You want to see my Dreams?</button>
     <button onclick="goTo('page3')">Back</button>
 </div>
 
 <!-- PAGE 5 : MEMORY GALLERY -->
 <div id="page5" class="page">
-    <h2 style="font-family: 'Indie Flower', cursive; font-size: 34px;">Our Memories</h2>
+    <h2 style="font-family: 'Indie Flower', cursive; font-size: 34px;">My Dreams with you!</h2>
     <div class="gallery">
         <div class="memory">
             <h3>The beach, the breeze, and your hand in mine</h3>
@@ -293,29 +321,350 @@ for (let i = 0; i < 20; i++) {
         </div>
     </div>
 
-    <button class="yes" onclick="goTo('page6')">Promises</button>
+    <button class="yes" onclick="goTo('page6')">Now lets Promise together</button>
     <button onclick="goTo('page4')">Back</button>
 </div>
 
 <!-- PAGE 6 : PROMISES -->
 <div id="page6" class="page">
-    <h2 style="font-family: 'Indie Flower', cursive; font-size: 34px;">My Promises</h2>
-    <div class="paper" style="font-size: 24px;">
-        <p>• I promise to make you happy forever.</p>
-        <p>• I promise to grow together with you.</p>
+    <!-- LOVE METER -->
+    <div id="love-meter-container" style="position: fixed; top: 0; left: 0; width: 100%; padding: 10px; background: #ffe6e6; z-index: 999;">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; position: relative;">
+            <span style="font-family:'Indie Flower', cursive; font-size: 20px;">Promise Meter 💖</span>
+            <div style="background: #fff0f0; width: 70%; height: 20px; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.2); position: relative;">
+                <div id="love-meter-fill" style="height:100%; width:0%; background: #ff4d6d; transition: width 0.5s; position: relative;"></div>
+                <div id="hearts-container" style="position: absolute; left: 0; top: -25px; width: 100%; height: 40px; pointer-events: none;"></div>
+            </div>
+            <span id="love-percent" style="font-family:'Indie Flower', cursive; font-size: 18px;">0%</span>
+        </div>
+        <div id="love-message" style="text-align: center; font-family:'Indie Flower', cursive; font-size: 20px; margin-top: 8px; color: #ff4d6d; display:none;">
+            Every promise brings us closer to forever 💞
+        </div>
     </div>
-    <button class="yes" onclick="goTo('page7')">Next</button>
+
+    <h2 style="margin-top: 60px; font-family: 'Indie Flower', cursive; font-size: 34px;">Let's Promise 💖</h2>
+    
+    <div class="promises-container" style="margin-top: 20px;">
+        <!-- Promise items: 8 promises, Yes / No buttons as before -->
+        <div class="promise" data-index="0">
+            <p>Let's promise today to love each other, even from miles apart.</p>
+            <button class="promise-btn" onclick="answerPromise(this)">Yes</button>
+            <button class="promise-btn" onclick="answerPromise(this)">No</button>
+        </div>
+        <div class="promise" data-index="1">
+            <p>Let's promise to keep our calls, texts, and laughs alive every day.</p>
+            <button class="promise-btn" onclick="answerPromise(this)">Yes</button>
+            <button class="promise-btn" onclick="answerPromise(this)">No</button>
+        </div>
+        <div class="promise" data-index="2">
+            <p>Let's promise to make every reunion special and unforgettable.</p>
+            <button class="promise-btn" onclick="answerPromise(this)">Yes</button>
+            <button class="promise-btn" onclick="answerPromise(this)">No</button>
+        </div>
+        <div class="promise" data-index="3">
+            <p>Let's promise to trust each other completely, no matter the distance.</p>
+            <button class="promise-btn" onclick="answerPromise(this)">Yes</button>
+            <button class="promise-btn" onclick="answerPromise(this)">No</button>
+        </div>
+        <div class="promise" data-index="4">
+            <p>Let's promise to remember all the little things that make us smile.</p>
+            <button class="promise-btn" onclick="answerPromise(this)">Yes</button>
+            <button class="promise-btn" onclick="answerPromise(this)">No</button>
+        </div>
+        <div class="promise" data-index="5">
+            <p>Let's promise to dream about our future together, and make it real.</p>
+            <button class="promise-btn" onclick="answerPromise(this)">Yes</button>
+            <button class="promise-btn" onclick="answerPromise(this)">No</button>
+        </div>
+        <div class="promise" data-index="6">
+            <p>Let's promise to always support and encourage each other.</p>
+            <button class="promise-btn" onclick="answerPromise(this)">Yes</button>
+            <button class="promise-btn" onclick="answerPromise(this)">No</button>
+        </div>
+        <div class="promise" data-index="7">
+            <p>Let's promise to stay connected, heart to heart, until we’re together again.</p>
+            <button class="promise-btn" onclick="answerPromise(this)">Yes</button>
+            <button class="promise-btn" onclick="answerPromise(this)">No</button>
+        </div>
+    </div>
+
+    <button class="yes" style="margin-top:20px;" onclick="goTo('pageSecret')">Next</button>
     <button onclick="goTo('page5')">Back</button>
 </div>
 
-<!-- PAGE 7 : FINAL MESSAGE -->
-<div id="page7" class="page">
-    <h1 style="font-family: 'Indie Flower', cursive; font-size: 40px;">Happy Valentine's Day. Babe!</h1>
-    <p style="font-family: 'Indie Flower', cursive; font-size: 26px;">I love you. Always.</p>
-    <button class="yes" onclick="goTo('page1')">Replay</button>
+<style>
+.promises-container .promise {
+    background: rgba(255,255,255,0.9);
+    color: #ff4d6d;
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    font-family: "Indie Flower", cursive;
+}
+.promises-container .promise p {
+    margin: 0 0 8px 0;
+    font-size: 20px;
+}
+.promises-container button {
+    margin: 0 6px 6px 0;
+    font-size: 18px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.promises-container button.clicked-yes {
+    background: #ff4d6d;
+    color: white;
+}
+.promises-container button.clicked-no {
+    background: #aaa;
+    color: white;
+}
+
+/* ---------- HEART ANIMATION ---------- */
+.heart {
+    position: absolute;
+    font-size: 18px;
+    color: #ff4d6d;
+    animation: floatHeart 2s ease-out forwards;
+}
+@keyframes floatHeart {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-50px) scale(1.5); opacity: 0; }
+}
+</style>
+
+<script>
+let promisesClicked = 0;
+
+function answerPromise(btn) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('button');
+    if(btn.classList.contains('clicked-yes') || btn.classList.contains('clicked-no')) return;
+
+    if(btn.innerText === "Yes") {
+        promisesClicked++;
+        btn.classList.add('clicked-yes');
+
+        // add floating heart
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.left = (Math.random() * 80 + 10) + "%";
+        heart.style.fontSize = (16 + Math.random() * 8) + "px";
+        heart.innerText = "💖";
+        document.getElementById("hearts-container").appendChild(heart);
+        setTimeout(() => heart.remove(), 2000);
+    } else {
+        btn.classList.add('clicked-no');
+    }
+
+    // disable both buttons
+    buttons.forEach(b => b.disabled = true);
+
+    // update love meter
+    const fill = document.getElementById("love-meter-fill");
+    const percentText = document.getElementById("love-percent");
+    const message = document.getElementById("love-message");
+    const percent = Math.round((promisesClicked / 8) * 100);
+    fill.style.width = percent + "%";
+    percentText.innerText = percent + "%";
+
+    if(percent === 100) {
+        message.style.display = "block";
+    }
+}
+</script>
+
+<!-- PAGE 6B : SEVEN DAYS SECRET -->
+<div id="pageSecret" class="page">
+    <h2 style="font-family: 'Indie Flower', cursive; font-size: 34px;">Do you remember the pictures I sent each day?</h2>
+    <p style="font-family: 'Indie Flower', cursive; font-size: 22px; margin-bottom: 20px;">
+        Read the first letter from each picture, one by one. Can you guess the secret?
+    </p>
+
+    <!-- Scrollable picture display -->
+    <div style="position: relative; width: 90%; max-width: 400px; margin: 0 auto;">
+        <img id="dayPic" src="day1.jpeg" alt="Day 1" style="width: 100%; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.25);">
+        <div style="margin-top: 12px; display: flex; justify-content: space-between;">
+            <button onclick="prevDay()" style="padding:10px 20px;">Previous</button>
+            <span id="dayLabel" style="font-family:'Indie Flower', cursive; font-size: 20px;">Day 1</span>
+            <button onclick="nextDay()" style="padding:10px 20px;">Next</button>
+        </div>
+    </div>
+
+    <!-- Input area for all 8 letters -->
+<div style="margin-top: 24px; text-align:center;">
+    <label for="letterInput" style="font-family:'Indie Flower', cursive; font-size:22px;">Type the first letter from each day:</label>
+    <input type="text" id="letterInput" maxlength="8" placeholder="________" 
+           style="font-size: 28px; font-family:'Indie Flower', cursive; padding: 10px; width: 80%; text-align:center; letter-spacing: 12px;">
+</div>
+
+    <button onclick="revealSecret()" style="margin-top:20px; font-family:'Indie Flower', cursive; font-size:22px; padding:10px 20px;">
+        Reveal Secret ❤️
+    </button>
+
+    <!-- Secret message container -->
+    <div id="secretMessage" style="margin-top: 24px; position: relative; min-height: 80px; display:none;">
+        <div id="messageLetters" style="display:flex; justify-content:center; flex-wrap:wrap;"></div>
+    </div>
+
+    <!-- Next button after secret is revealed -->
+    <div style="margin-top: 24px;">
+        <button id="secretNext" onclick="goTo('page7')" style="display:none; font-family:'Indie Flower', cursive; font-size:22px; padding:10px 20px;">
+            Next
+        </button>
+    </div>
 </div>
 
 <script>
+const dayPics = [
+    {src: "day1.jpeg", label: "Day 1"},
+    {src: "day2.jpeg", label: "Day 2"},
+    {src: "day3.jpeg", label: "Day 3"},
+    {src: "day4.jpeg", label: "Day 4"},
+    {src: "day5.jpeg", label: "Day 5"},
+    {src: "day6.jpeg", label: "Day 6"},
+    {src: "day7.jpeg", label: "Day 7"},
+    {src: "day8.jpeg", label: "Day 8"}
+];
+
+let currentDay = 0;
+function showDay() {
+    const pic = dayPics[currentDay];
+    document.getElementById('dayPic').src = pic.src;
+    document.getElementById('dayLabel').innerText = pic.label;
+}
+
+function nextDay() {
+    if(currentDay < dayPics.length -1) currentDay++;
+    showDay();
+}
+
+function prevDay() {
+    if(currentDay > 0) currentDay--;
+    showDay();
+}
+
+// Secret reveal animation
+function revealSecret() {
+    const letters = ["I", "L", "O", "V", "E", "Y", "O", "U"];
+    const messageContainer = document.getElementById("messageLetters");
+    const secretDiv = document.getElementById("secretMessage");
+    messageContainer.innerHTML = "";
+    secretDiv.style.display = "block";
+
+    let i = 0;
+    function showLetter() {
+        if (i < letters.length) {
+            const span = document.createElement("span");
+            span.innerText = letters[i];
+            span.style.fontSize = "36px";
+            span.style.fontFamily = "'Indie Flower', cursive";
+            span.style.margin = "0 4px";
+            span.style.opacity = 0;
+            span.style.transform = "translateY(-20px)";
+            span.style.transition = "all 0.5s ease";
+            messageContainer.appendChild(span);
+            setTimeout(() => { span.style.opacity=1; span.style.transform="translateY(0)"; }, 50);
+
+            // floating heart
+            const heart = document.createElement("div");
+            heart.className = "floating-heart";
+            heart.innerText = "❤️";
+            heart.style.position = "absolute";
+            heart.style.left = (span.offsetLeft + Math.random()*20) + "px";
+            heart.style.top = (span.offsetTop - 10) + "px";
+            heart.style.fontSize = "24px";
+            heart.style.pointerEvents = "none";
+            secretDiv.appendChild(heart);
+            setTimeout(()=>heart.remove(),2000);
+
+            i++;
+            setTimeout(showLetter, 400);
+        } else {
+            document.getElementById('secretNext').style.display = "inline-block";
+        }
+    }
+    showLetter();
+}
+
+// Initialize first day
+showDay();
+</script>
+
+<style>
+.floating-heart {
+    animation: floatHeart 2s ease-out forwards;
+    position: absolute;
+    font-size: 24px;
+}
+
+@keyframes floatHeart {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    50% { transform: translateY(-20px) scale(1.2); opacity: 1; }
+    100% { transform: translateY(-40px) scale(1); opacity: 0; }
+}
+</style>
+
+
+
+<!-- PAGE 7 : FINAL MESSAGE -->
+<div id="page7" class="page" style="position:relative; overflow:hidden;">
+
+    <!-- Background video -->
+    <video autoplay muted loop playsinline 
+           style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1;">
+        <source src="finalvideo.mp4" type="video/mp4">
+    </video>
+
+    <!-- Floating hearts and sparkles -->
+    <div class="floating-heart-final" style="left:10vw;">❤️</div>
+    <div class="floating-heart-final" style="left:30vw;">💖</div>
+    <div class="floating-heart-final" style="left:50vw;">✨</div>
+    <div class="floating-heart-final" style="left:70vw;">💞</div>
+    <div class="floating-heart-final" style="left:90vw;">❤️</div>
+
+    <!-- Animated text container -->
+    <h1 id="finalTitle" style="font-family: 'Indie Flower', cursive; font-size: 42px; color:white; text-shadow:0 0 15px #ff4d6d;">
+        Happy Valentine's Day, Hissi!
+    </h1>
+    <p id="finalMessage" style="font-family: 'Indie Flower', cursive; font-size:28px; color:white; text-shadow:0 0 10px #ff4d6d;">
+        I love you. Always.
+    </p>
+
+    <!-- Replay button -->
+    <button class="yes" onclick="goTo('page1'); startMusic();">Replay</button>
+</div>
+
+<style>
+/* Floating hearts/sparks animation */
+.floating-heart-final {
+    position: absolute;
+    font-size: 28px;
+    animation: floatFinal 6s linear infinite;
+    opacity: 0;
+}
+
+@keyframes floatFinal {
+    0% { transform: translateY(100vh) rotate(0deg); opacity:0; }
+    10% { opacity:1; }
+    100% { transform: translateY(-20vh) rotate(360deg); opacity:0; }
+}
+
+/* Optional: fade-in animation for text */
+#finalTitle, #finalMessage {
+    opacity: 0;
+    animation: fadeInText 2s forwards;
+    animation-delay: 0.5s;
+}
+
+@keyframes fadeInText {
+    to { opacity: 1; }
+}
+</style>
+
+<script>
+// retain your existing functions
 function goTo(pageId) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(pageId).classList.add('active');
@@ -333,6 +682,9 @@ function startMusic() {
     }
 }
 </script>
+
+
+
 
 </body>
 </html>
