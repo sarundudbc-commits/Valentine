@@ -477,40 +477,63 @@ function answerPromise(btn) {
 
 <!-- PAGE 6B : SEVEN DAYS SECRET -->
 <div id="pageSecret" class="page">
-    <h2 style="font-family: 'Indie Flower', cursive; font-size: 34px;">Do you remember the pictures I sent each day?</h2>
+    <h2 style="font-family: 'Indie Flower', cursive; font-size: 34px;">
+        Do you remember the pictures I’ve been sending?
+    </h2>
+
     <p style="font-family: 'Indie Flower', cursive; font-size: 22px; margin-bottom: 20px;">
-        Read the first letter from each picture, one by one. Can you guess the secret?
+        Try to guess the first letter from each day.<br>
+        If you need help, you can reveal the hints.
     </p>
 
-    <!-- Scrollable picture display -->
-    <div style="position: relative; width: 90%; max-width: 400px; margin: 0 auto;">
-        <img id="dayPic" src="day1.jpeg" alt="Day 1" style="width: 100%; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.25);">
+    <!-- Show Hint Button -->
+    <button onclick="toggleHints()" 
+        style="font-family:'Indie Flower', cursive; font-size:20px; padding:8px 18px; margin-bottom:20px;">
+        Show Hints
+    </button>
+
+    <!-- Hidden Scrollable picture display -->
+    <div id="hintSection" style="display:none; position: relative; width: 90%; max-width: 400px; margin: 0 auto 20px auto;">
+        <img id="dayPic" src="day1.jpeg" alt="Day 1"
+            style="width: 100%; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.25);">
+
         <div style="margin-top: 12px; display: flex; justify-content: space-between;">
-            <button onclick="prevDay()" style="padding:10px 20px;">Previous</button>
+            <button onclick="prevDay()" style="padding:8px 16px;">Previous</button>
             <span id="dayLabel" style="font-family:'Indie Flower', cursive; font-size: 20px;">Day 1</span>
-            <button onclick="nextDay()" style="padding:10px 20px;">Next</button>
+            <button onclick="nextDay()" style="padding:8px 16px;">Next</button>
         </div>
     </div>
 
-    <!-- Input area for all 8 letters -->
-<div style="margin-top: 24px; text-align:center;">
-    <label for="letterInput" style="font-family:'Indie Flower', cursive; font-size:22px;">Type the first letter from each day:</label>
-    <input type="text" id="letterInput" maxlength="8" placeholder="________" 
-           style="font-size: 28px; font-family:'Indie Flower', cursive; padding: 10px; width: 80%; text-align:center; letter-spacing: 12px;">
-</div>
+    <!-- Input area -->
+    <div style="margin-top: 20px; text-align:center;">
+        <label for="letterInput"
+            style="font-family:'Indie Flower', cursive; font-size:22px;">
+            Type all 8 letters:
+        </label><br>
 
-    <button onclick="revealSecret()" style="margin-top:20px; font-family:'Indie Flower', cursive; font-size:22px; padding:10px 20px;">
+        <input type="text" id="letterInput" maxlength="8" placeholder="________"
+            style="font-size: 28px; font-family:'Indie Flower', cursive;
+            padding: 10px; width: 80%; text-align:center; letter-spacing: 12px;">
+    </div>
+
+    <button onclick="revealSecret()"
+        style="margin-top:20px; font-family:'Indie Flower', cursive;
+        font-size:22px; padding:10px 20px;">
         Reveal Secret ❤️
     </button>
 
     <!-- Secret message container -->
-    <div id="secretMessage" style="margin-top: 24px; position: relative; min-height: 80px; display:none;">
-        <div id="messageLetters" style="display:flex; justify-content:center; flex-wrap:wrap;"></div>
+    <div id="secretMessage"
+        style="margin-top: 24px; position: relative; min-height: 80px; display:none;">
+        <div id="messageLetters"
+            style="display:flex; justify-content:center; flex-wrap:wrap;"></div>
     </div>
 
-    <!-- Next button after secret is revealed -->
+    <!-- Next button -->
     <div style="margin-top: 24px;">
-        <button id="secretNext" onclick="goTo('page7')" style="display:none; font-family:'Indie Flower', cursive; font-size:22px; padding:10px 20px;">
+        <button id="secretNext" onclick="goTo('page7')"
+            style="display:none; font-family:'Indie Flower', cursive;
+            font-size:22px; padding:10px 20px;">
             Next
         </button>
     </div>
@@ -529,6 +552,13 @@ const dayPics = [
 ];
 
 let currentDay = 0;
+
+function toggleHints() {
+    const hintSection = document.getElementById("hintSection");
+    hintSection.style.display =
+        hintSection.style.display === "none" ? "block" : "none";
+}
+
 function showDay() {
     const pic = dayPics[currentDay];
     document.getElementById('dayPic').src = pic.src;
@@ -536,12 +566,12 @@ function showDay() {
 }
 
 function nextDay() {
-    if(currentDay < dayPics.length -1) currentDay++;
+    if (currentDay < dayPics.length - 1) currentDay++;
     showDay();
 }
 
 function prevDay() {
-    if(currentDay > 0) currentDay--;
+    if (currentDay > 0) currentDay--;
     showDay();
 }
 
@@ -550,6 +580,7 @@ function revealSecret() {
     const letters = ["I", "L", "O", "V", "E", "Y", "O", "U"];
     const messageContainer = document.getElementById("messageLetters");
     const secretDiv = document.getElementById("secretMessage");
+
     messageContainer.innerHTML = "";
     secretDiv.style.display = "block";
 
@@ -565,17 +596,17 @@ function revealSecret() {
             span.style.transform = "translateY(-20px)";
             span.style.transition = "all 0.5s ease";
             messageContainer.appendChild(span);
-            setTimeout(() => { span.style.opacity=1; span.style.transform="translateY(0)"; }, 50);
 
-            // floating heart
+            setTimeout(() => {
+                span.style.opacity = 1;
+                span.style.transform = "translateY(0)";
+            }, 50);
+
             const heart = document.createElement("div");
             heart.className = "floating-heart";
             heart.innerText = "❤️";
-            heart.style.position = "absolute";
             heart.style.left = (span.offsetLeft + Math.random()*20) + "px";
             heart.style.top = (span.offsetTop - 10) + "px";
-            heart.style.fontSize = "24px";
-            heart.style.pointerEvents = "none";
             secretDiv.appendChild(heart);
             setTimeout(()=>heart.remove(),2000);
 
@@ -588,23 +619,22 @@ function revealSecret() {
     showLetter();
 }
 
-// Initialize first day
 showDay();
 </script>
 
 <style>
 .floating-heart {
-    animation: floatHeart 2s ease-out forwards;
     position: absolute;
     font-size: 24px;
+    animation: floatHeart 2s ease-out forwards;
 }
 
 @keyframes floatHeart {
     0% { transform: translateY(0) scale(1); opacity: 1; }
-    50% { transform: translateY(-20px) scale(1.2); opacity: 1; }
     100% { transform: translateY(-40px) scale(1); opacity: 0; }
 }
 </style>
+
 
 
 
