@@ -171,6 +171,8 @@ button {
 }
 
 
+
+
 </style>
 </head>
 
@@ -295,35 +297,149 @@ for (let i = 0; i < 20; i++) {
     <button onclick="goTo('page3')">Back</button>
 </div>
 
+<!-- PAGE 5 : MEMORY GALLERY (Tabbed Version) -->
 <!-- PAGE 5 : MEMORY GALLERY -->
 <div id="page5" class="page">
-    <h2 style="font-family: 'Indie Flower', cursive; font-size: 34px;">My Dreams with you!</h2>
-    <div class="gallery">
-        <div class="memory">
+
+    <h2 class="gallery-title">My Dreams with you!</h2>
+
+    <!-- Tabs -->
+    <div class="dream-tabs">
+        <button class="dream-tab active" onclick="showDream(1)">Dream 1</button>
+        <button class="dream-tab" onclick="showDream(2)">Dream 2</button>
+        <button class="dream-tab" onclick="showDream(3)">Dream 3</button>
+        <button class="dream-tab" onclick="showDream(4)">Dream 4</button>
+    </div>
+
+    <!-- Dream Display Area -->
+    <div class="dream-display">
+
+        <div class="dream active" id="dream1">
             <h3>The beach, the breeze, and your hand in mine</h3>
-            
-            <img src="memory1.jpeg" alt="Memory 1" class="photo">
+            <img src="memory1.jpeg" class="photo">
         </div>
-        <div class="memory">
+
+        <div class="dream" id="dream2">
             <h3>In your eyes, I see my forever.</h3>
-            
-            <img src="memory2.jpeg" alt="Memory 2" class="photo">
+            <img src="memory2.jpeg" class="photo">
         </div>
-        <div class="memory">
+
+        <div class="dream" id="dream3">
             <h3>We are the stars, and the moon is our witness</h3>
-            
-            <img src="memory3.jpeg" alt="Memory 3" class="photo">
+            <img src="memory3.jpeg" class="photo">
         </div>
-        <div class="memory">
+
+        <div class="dream" id="dream4">
             <h3>I want mornings like this forever</h3>
-            
-            <img src="memory4.jpeg" alt="Memory 4" class="photo">
+            <img src="memory4.jpeg" class="photo">
         </div>
+
     </div>
 
     <button class="yes" onclick="goTo('page6')">Now lets Promise together</button>
     <button onclick="goTo('page4')">Back</button>
+
 </div>
+
+
+<style>
+/* Tabs */
+.gallery-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 48px;
+    color: #ff4d88;
+    text-shadow: 0 4px 15px rgba(255, 77, 136, 0.4);
+    margin-bottom: 25px;
+    animation: romanticFade 1.5s ease;
+}
+
+.dream h3 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 34px;
+    color: #d6336c;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    animation: romanticSlide 1.2s ease;
+}
+
+.dream-tabs {
+    margin-bottom: 25px;
+}
+
+.dream-tab {
+    padding: 10px 22px;
+    margin: 6px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #ffc0cb, #ff99ac);
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    transition: all 0.4s ease;
+}
+
+.dream-tab:hover {
+    transform: scale(1.08);
+}
+
+.dream-tab.active {
+    background: linear-gradient(135deg, #ff4d6d, #ff1e56);
+    color: white;
+    box-shadow: 0 8px 25px rgba(255, 30, 86, 0.4);
+}
+
+.photo {
+    width: 300px;
+    border-radius: 25px;
+    margin-top: 15px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    animation: photoReveal 1.2s ease;
+}
+
+.dream {
+    display: none;
+    text-align: center;
+}
+
+.dream.active {
+    display: block;
+}
+
+@keyframes romanticFade {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes romanticSlide {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes photoReveal {
+    from { opacity: 0; transform: scale(0.85); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+</style>
+
+<script>
+function showDream(num) {
+
+    // Remove active from all dreams
+    document.querySelectorAll(".dream").forEach(d => d.classList.remove("active"));
+
+    // Remove active from all tabs
+    document.querySelectorAll(".dream-tab").forEach(t => t.classList.remove("active"));
+
+    // Activate selected dream
+    document.getElementById("dream" + num).classList.add("active");
+
+    // Activate correct tab
+    document.querySelectorAll(".dream-tab")[num - 1].classList.add("active");
+}
+
+</script>
+
 
 <!-- PAGE 6 : PROMISES -->
 <div id="page6" class="page">
@@ -337,15 +453,12 @@ for (let i = 0; i < 20; i++) {
             </div>
             <span id="love-percent" style="font-family:'Indie Flower', cursive; font-size: 18px;">0%</span>
         </div>
-        <div id="love-message" style="text-align: center; font-family:'Indie Flower', cursive; font-size: 20px; margin-top: 8px; color: #ff4d6d; display:none;">
-            Every promise brings us closer to forever 💞
-        </div>
     </div>
 
     <h2 style="margin-top: 60px; font-family: 'Indie Flower', cursive; font-size: 34px;">Let's Promise 💖</h2>
     
     <div class="promises-container" style="margin-top: 20px;">
-        <!-- Promise items: 8 promises, Yes / No buttons as before -->
+        <!-- Promise items: 8 promises -->
         <div class="promise" data-index="0">
             <p>Let's promise today to love each other, even from miles apart.</p>
             <button class="promise-btn" onclick="answerPromise(this)">Yes</button>
@@ -390,6 +503,11 @@ for (let i = 0; i < 20; i++) {
 
     <button class="yes" style="margin-top:20px;" onclick="goTo('pageSecret')">Next</button>
     <button onclick="goTo('page5')">Back</button>
+
+    <!-- Celebration Message -->
+    <div id="love-final-message">
+        Every promise brings us closer to forever 💞
+    </div>
 </div>
 
 <style>
@@ -421,59 +539,131 @@ for (let i = 0; i < 20; i++) {
     color: white;
 }
 
-/* ---------- HEART ANIMATION ---------- */
+/* Heart animation */
 .heart {
     position: absolute;
     font-size: 18px;
     color: #ff4d6d;
-    animation: floatHeart 2s ease-out forwards;
+    pointer-events: none;
 }
-@keyframes floatHeart {
-    0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(-50px) scale(1.5); opacity: 0; }
+
+/* Celebration message */
+#love-final-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-family: "Indie Flower", cursive;
+    font-size: 28px;
+    color: #ff1a75;
+    text-align: center;
+    padding: 20px 40px;
+    background: rgba(255,230,240,0.9);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    display: none;
+    z-index: 10000;
+    animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+    0% { transform: translate(-50%,-50%) scale(1); }
+    100% { transform: translate(-50%,-50%) scale(1.1); }
 }
 </style>
 
 <script>
-let promisesClicked = 0;
+let answers = Array(8).fill(null);
 
-function answerPromise(btn) {
+function answerPromise(btn){
     const parent = btn.parentElement;
+    const index = parseInt(parent.dataset.index);
+
+    // Toggle answers
+    if(btn.innerText.trim() === "Yes") answers[index] = true;
+    else if(btn.innerText.trim() === "No") answers[index] = false;
+
+    // Update button classes
     const buttons = parent.querySelectorAll('button');
-    if(btn.classList.contains('clicked-yes') || btn.classList.contains('clicked-no')) return;
+    buttons.forEach(b => b.classList.remove("clicked-yes","clicked-no"));
+    if(answers[index] === true) buttons[0].classList.add("clicked-yes");
+    if(answers[index] === false) buttons[1].classList.add("clicked-no");
 
-    if(btn.innerText === "Yes") {
-        promisesClicked++;
-        btn.classList.add('clicked-yes');
+    updateLoveMeter();
+}
 
-        // add floating heart
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.style.left = (Math.random() * 80 + 10) + "%";
-        heart.style.fontSize = (16 + Math.random() * 8) + "px";
-        heart.innerText = "💖";
-        document.getElementById("hearts-container").appendChild(heart);
-        setTimeout(() => heart.remove(), 2000);
-    } else {
-        btn.classList.add('clicked-no');
-    }
-
-    // disable both buttons
-    buttons.forEach(b => b.disabled = true);
-
-    // update love meter
+function updateLoveMeter(){
     const fill = document.getElementById("love-meter-fill");
     const percentText = document.getElementById("love-percent");
-    const message = document.getElementById("love-message");
-    const percent = Math.round((promisesClicked / 8) * 100);
+    const messageDiv = document.getElementById("love-final-message");
+    const heartsContainer = document.getElementById("hearts-container");
+
+    let yesCount = answers.filter(a=>a===true).length;
+    const percent = Math.round((yesCount/8)*100);
     fill.style.width = percent + "%";
     percentText.innerText = percent + "%";
 
-    if(percent === 100) {
-        message.style.display = "block";
+    // If all Yes, show celebration
+    if(yesCount === 8){
+        // Show message
+        messageDiv.style.display = "block";
+        triggerFireworks();
+    } else {
+        messageDiv.style.display = "none";
+    }
+
+    // small floating heart for every Yes click
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = ["💖","💞","✨"][Math.floor(Math.random()*3)];
+    heart.style.left = (Math.random()*100) + "%";
+    heart.style.fontSize = (16 + Math.random()*12) + "px";
+    heartsContainer.appendChild(heart);
+    setTimeout(()=>heart.remove(),2000);
+}
+
+// Firework-style celebration
+function triggerFireworks(){
+    const container = document.getElementById("hearts-container");
+    const containerRect = container.getBoundingClientRect();
+    const centerX = containerRect.width/2;
+
+    for(let i=0;i<80;i++){
+        const spark = document.createElement("div");
+        spark.className="heart";
+        spark.innerText=["💖","💞","✨","💘","💝"][Math.floor(Math.random()*5)];
+        spark.style.position="absolute";
+        spark.style.left=centerX + "px";
+        spark.style.bottom="0px";
+        spark.style.fontSize=(16+Math.random()*24)+"px";
+        spark.style.opacity=1;
+        container.appendChild(spark);
+
+        // Animate spark
+        const angle = (Math.random()*120 - 60) * (Math.PI/180);
+        const distance = 150 + Math.random()*100;
+        let t = 0;
+        const speed = 5 + Math.random()*3;
+
+        const interval = setInterval(()=>{
+            t+=0.05*speed;
+            const x = distance*Math.cos(angle)*t;
+            const y = distance*Math.sin(angle)*t + t*10;
+            spark.style.transform = `translate(${x}px, ${-y}px) rotate(${t*180}deg)`;
+            spark.style.opacity = 1 - t/2;
+            if(t>2){
+                spark.remove();
+                clearInterval(interval);
+            }
+        },20);
     }
 }
 </script>
+
+
+
+
+
 
 <!-- PAGE 6B : SEVEN DAYS SECRET -->
 <div id="pageSecret" class="page">
@@ -638,79 +828,211 @@ showDay();
 
 
 
-<!-- PAGE 7 : FINAL MESSAGE -->
-<div id="page7" class="page" style="position:relative; overflow:hidden;">
+<!-- PAGE 7 : FINAL DISNEY FINALE -->
+<div id="page7" class="page final-page">
 
-    <!-- Background video -->
-    <video autoplay muted loop playsinline 
-           style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1;">
+    <!-- Background Video -->
+    <video id="finalVideo" class="final-video" playsinline>
         <source src="finalvideo.mp4" type="video/mp4">
     </video>
 
-    <!-- Floating hearts and sparkles -->
-    <div class="floating-heart-final" style="left:10vw;">❤️</div>
-    <div class="floating-heart-final" style="left:30vw;">💖</div>
-    <div class="floating-heart-final" style="left:50vw;">✨</div>
-    <div class="floating-heart-final" style="left:70vw;">💞</div>
-    <div class="floating-heart-final" style="left:90vw;">❤️</div>
+    <!-- Magical overlay -->
+    <div class="final-overlay"></div>
 
-    <!-- Animated text container -->
-    <h1 id="finalTitle" style="font-family: 'Indie Flower', cursive; font-size: 42px; color:white; text-shadow:0 0 15px #ff4d6d;">
-        Happy Valentine's Day, Hissi!
-    </h1>
-    <p id="finalMessage" style="font-family: 'Indie Flower', cursive; font-size:28px; color:white; text-shadow:0 0 10px #ff4d6d;">
-        I love you. Always.
-    </p>
+    <!-- Particle containers -->
+    <div id="particleContainer"></div>
+    <div id="petalContainer"></div>
 
-    <!-- Replay button -->
-    <button class="yes" onclick="goTo('page1'); startMusic();">Replay</button>
+    <!-- Content -->
+    <div class="final-content">
+        <h1 class="final-title">Happy Valentine's Day, Hissi!</h1>
+        <p class="final-text">I love you. Always.</p>
+        <button class="yes romantic-btn" onclick="resetExperience()">Replay</button>
+    </div>
 </div>
 
+
+
+
+
 <style>
-/* Floating hearts/sparks animation */
-.floating-heart-final {
-    position: absolute;
-    font-size: 28px;
-    animation: floatFinal 6s linear infinite;
-    opacity: 0;
+.final-page {
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+    animation: fadeScene 1s ease;
 }
 
-@keyframes floatFinal {
-    0% { transform: translateY(100vh) rotate(0deg); opacity:0; }
-    10% { opacity:1; }
-    100% { transform: translateY(-20vh) rotate(360deg); opacity:0; }
-}
-
-/* Optional: fade-in animation for text */
-#finalTitle, #finalMessage {
-    opacity: 0;
-    animation: fadeInText 2s forwards;
-    animation-delay: 0.5s;
-}
-
-@keyframes fadeInText {
+@keyframes fadeScene {
+    from { opacity: 0; }
     to { opacity: 1; }
 }
+
+.final-video {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: slowZoom 20s ease-in-out infinite alternate;
+}
+
+@keyframes slowZoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+.final-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,77,109,0.2), rgba(0,0,0,0.7));
+}
+
+/* Content */
+.final-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    color: white;
+    top: 40%;
+    transform: translateY(-50%);
+}
+
+.final-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 64px;
+    background: linear-gradient(90deg, #fff, #ffd700, #ff4d6d, #fff);
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 4s linear infinite, heartbeat 1.5s infinite;
+}
+
+.final-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 36px;
+    margin-top: 20px;
+    opacity: 0;
+    animation: fadeUp 2s ease forwards;
+    animation-delay: 0.8s;
+}
+
+.romantic-btn {
+    margin-top: 30px;
+    padding: 12px 28px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #ff4d6d, #ff99ac);
+    border: none;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    transition: 0.4s ease;
+}
+.romantic-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(255,77,109,0.8);
+}
+
+/* Animations */
+@keyframes shimmer {
+    0% { background-position: 0% center; }
+    100% { background-position: 300% center; }
+}
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes heartbeat {
+    0%,100%{ transform: scale(1);}
+    25%{ transform: scale(1.08);}
+    50%{ transform: scale(1.12);}
+    75%{ transform: scale(1.08);}
+}
+
+/* Floating particles / hearts */
+.particle, .petal {
+    position: absolute;
+    animation: floatUp 6s linear infinite;
+    opacity: 0;
+    pointer-events: none;
+    font-size: 24px;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(100vh) rotate(0deg) scale(0.6); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(-50vh) rotate(360deg) scale(1.2); opacity: 0; }
+}
+
 </style>
 
 <script>
-// retain your existing functions
 function goTo(pageId) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(pageId).classList.add('active');
-}
 
-function reveal(btn, text) {
-    btn.innerText = text;
-    btn.disabled = true;
-}
+    const video = document.getElementById("finalVideo");
 
-function startMusic() {
-    const music = document.getElementById("music");
-    if (music.paused) {
-        music.play().catch(() => {});
+    if (pageId === 'page7') {
+        if (video) {
+            video.currentTime = 0;
+            video.muted = false;
+            video.loop = true;
+            video.play().catch(()=>{});
+        }
+        createParticles();
+        createPetals();
+    } else {
+        if (video) { video.pause(); video.currentTime = 0; }
     }
 }
+
+// Hearts, sparkles
+function createParticles() {
+    const container = document.getElementById("particleContainer");
+    container.innerHTML = "";
+    const symbols = ["❤️","💖","✨","💞","💘","💓"];
+    for(let i=0;i<30;i++){
+        const p = document.createElement("div");
+        p.className = "particle";
+        p.innerText = symbols[Math.floor(Math.random()*symbols.length)];
+        p.style.left = Math.random()*100 + "vw";
+        p.style.animationDuration = (4 + Math.random()*4) + "s";
+        p.style.fontSize = (20 + Math.random()*20) + "px";
+        container.appendChild(p);
+    }
+}
+
+// Rose petals
+function createPetals() {
+    const container = document.getElementById("petalContainer");
+    container.innerHTML = "";
+    for(let i=0;i<20;i++){
+        const p = document.createElement("div");
+        p.className = "petal";
+        p.innerText = "🌹";
+        p.style.left = Math.random()*100 + "vw";
+        p.style.animationDuration = (5 + Math.random()*5) + "s";
+        p.style.fontSize = (18 + Math.random()*18) + "px";
+        container.appendChild(p);
+    }
+}
+
+function resetExperience() {
+    location.reload();
+}
+
+function reveal(btn, text){
+    btn.innerText = text; btn.disabled=true;
+}
+
+function startMusic(){
+    const music = document.getElementById("music");
+    if(music.paused) music.play().catch(()=>{});
+}
+
+
+
 </script>
 
 
