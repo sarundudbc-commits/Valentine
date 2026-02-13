@@ -180,12 +180,12 @@ button {
 
 <!-- FLOATING BACKGROUND WORDS -->
 <script>
-const bgWords = ["Feb 14", "P LOVE S", "Love You", "Hey Cutie", "Forever"];
+const bgWords = ["💖","💞","💘","💝","💕","Feb 14", "P LOVE S", "Love You", "Hey Cutie", "Forever"];
 for (let i = 0; i < 20; i++) {
     const el = document.createElement("div");
     el.className = "floating";
     el.style.left = Math.random() * 100 + "vw";
-    el.style.animationDuration = 8 + Math.random() * 8 + "s";
+    el.style.animationDuration = 32 + Math.random()*12 + "s";
     el.innerText = bgWords[Math.floor(Math.random() * bgWords.length)];
     document.body.appendChild(el);
 }
@@ -196,78 +196,358 @@ for (let i = 0; i < 20; i++) {
   <source src="music.mpeg" type="audio/mpeg">
 </audio>
 
-<!-- PAGE 1 -->
+<!-- ================== PAGE 1 : PROPOSAL ================== -->
 <div id="page1" class="page active">
-    <h1 class="heartbeat" style="font-family: 'Indie Flower', cursive; font-size: 42px;">
+    <!-- Background floating hearts -->
+    <div id="hearts-container-page1"></div>
+
+    <h1 class="heartbeat" style="font-family: 'Indie Flower', cursive; font-size: 42px; color:#ff4d6d; text-align:center;">
         Will you be my Valentine? 💖
     </h1>
 
-    <!-- Looping video under heading -->
-<video class="hero-media" autoplay muted loop playsinline>
-    <source src="propose.mp4" type="video/mp4">
-</video>
+    <!-- Looping dreamy video -->
+    <video class="hero-media" autoplay muted loop playsinline
+        style="width:80%; max-width:500px; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.3); margin:20px 0;">
+        <source src="propose.mp4" type="video/mp4">
+    </video>
 
-    <p style="font-size: 24px; font-family: 'Indie Flower', cursive;">Hissi, this is for you.</p>
-    <div>
-        <button class="yes" onclick="startMusic(); goTo('page3')">Yes</button>
-        <button class="no" onclick="startMusic(); goTo('page2')">No</button>
+    <p style="font-size: 24px; font-family: 'Indie Flower', cursive; text-align:center; color:#800040;">
+        Hissi, this is for you.
+    </p>
+
+    <div style="margin-top:20px;">
+        <button class="yes" onclick="startMusic(); goTo('page3');">Yes 💖</button>
+        <button class="no" onclick="startMusic(); goTo('page2');">No 😢</button>
     </div>
 </div>
 
-<!-- PAGE 2 : NO -->
+<!-- ================== PAGE 2 : DREAMY NO PAGE ================== -->
 <div id="page2" class="page">
-    <h1 style="font-family: 'Indie Flower', cursive; font-size: 44px;">Sorry 😢</h1>
-    <img src="boycry.jpg" class="hero-img-small" alt="No Image">
-    <p style="font-family: 'Indie Flower', cursive; font-size: 24px;">That is not an option.</p>
-    <p style="font-family: 'Indie Flower', cursive; font-size: 24px;">My heart already chose you.</p>
-    <button onclick="goTo('page1')">Go Back</button>
+    <!-- Background floating hearts & broken hearts -->
+    <div id="hearts-container-page2"></div>
+
+    <!-- Main message -->
+    <h1 class="animated-text" style="font-family: 'Indie Flower', cursive; font-size: 44px; color:#ff4d6d;">
+        Oops… my heart refuses that answer 💔
+    </h1>
+
+    <img src="boycry.jpg" alt="Cute Boy" class="hero-img-small"
+        style="width:220px; border-radius:16px; box-shadow:0 10px 25px rgba(0,0,0,0.2); animation: blushShake 1s ease-in-out infinite; margin:20px 0;">
+
+    <p class="animated-text" style="font-family: 'Indie Flower', cursive; font-size:24px; color:#800040; margin:8px 0;">
+        Don’t worry, I’ll wait forever 🥺💖
+    </p>
+
+    <button id="goBackBtn" onclick="goTo('page1');" 
+        style="background:#ff4d6d; color:white; font-size:20px; padding:14px 35px; border-radius:25px; border:none; cursor:pointer; box-shadow:0 5px 15px rgba(255,0,80,0.4); transition: transform 0.3s, box-shadow 0.3s;">
+        Take me back 💖
+    </button>
 </div>
+
+<style>
+/* ================== PAGE SETUP ================== */
+.page {
+    display: none;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+.page.active {
+    display: flex;
+}
+
+/* ================== FLOATING HEARTS / BROKEN HEARTS ================== */
+#hearts-container-page2 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    pointer-events: none;
+    z-index:1;
+}
+.floating-heart {
+    position: absolute;
+    font-size: 18px;
+    opacity: 0;
+    animation: floatHeart 6s linear forwards;
+}
+@keyframes floatHeart {
+    0% { transform: translateY(0) scale(0.5) rotate(0deg); opacity:0; }
+    10% { opacity:1; }
+    50% { transform: translateY(-250px) scale(1.1) rotate(15deg); }
+    100% { transform: translateY(-500px) scale(1.2) rotate(-15deg); opacity:0; }
+}
+
+/* ================== TEXT ANIMATION ================== */
+.animated-text {
+    opacity:0;
+    transform: translateY(20px);
+    animation: textFadeUp 1s forwards;
+}
+.animated-text:nth-child(1){ animation-delay:0.2s; }
+.animated-text:nth-child(3){ animation-delay:0.4s; }
+@keyframes textFadeUp {
+    to { opacity:1; transform: translateY(0);}
+}
+
+/* ================== IMAGE ANIMATION ================== */
+.hero-img-small {
+    transition: transform 0.3s;
+}
+/* Cute blush + shake animation */
+@keyframes blushShake {
+    0%,100%{ transform: translateY(0) rotate(0deg); }
+    20%{ transform: translateX(-3px) rotate(-2deg);}
+    40%{ transform: translateX(3px) rotate(2deg);}
+    60%{ transform: translateX(-3px) rotate(-2deg);}
+    80%{ transform: translateX(3px) rotate(2deg);}
+}
+
+/* ================== BUTTON STYLING ================== */
+#goBackBtn {
+    position: relative;
+    z-index:2;
+}
+#goBackBtn:hover {
+    transform: scale(1.1);
+    box-shadow:0 8px 20px rgba(255,0,80,0.6);
+}
+
+/* ================== OPTIONAL SPARKLE EFFECT ================== */
+.sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #fff0f0;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: sparkleAnim 2s infinite;
+}
+@keyframes sparkleAnim {
+    0%{ transform: scale(0.5) translateY(0); opacity:1;}
+    50%{ transform: scale(1.5) translateY(-10px); opacity:0.5;}
+    100%{ transform: scale(0.5) translateY(0); opacity:1;}
+}
+</style>
+
+<script>
+// ================== NAVIGATION ==================
+function goTo(pageId){
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+}
+
+// ================== FLOATING HEARTS / BROKEN HEARTS ==================
+function spawnHearts(containerId){
+    const container = document.getElementById(containerId);
+    const heart = document.createElement("div");
+    heart.className="floating-heart";
+    heart.innerText = Math.random() < 0.7 
+        ? ["💖","💞","💘","💝"][Math.floor(Math.random()*4)]
+        : "💔"; // 30% chance of broken heart
+    heart.style.left=Math.random()*window.innerWidth+"px";
+    heart.style.fontSize=(16 + Math.random()*12)+"px";
+    container.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+}
+
+// Start hearts
+setInterval(()=>spawnHearts('hearts-container-page2'),700);
+</script>
+
+
+
 
 <!-- PAGE 3 : YES -->
-<div id="page3" class="page">
-    <h2 style="font-family: 'Indie Flower', cursive; font-size: 34px;">I love the way....... 💕</h2>
+<div id="page3" class="page" style="position:relative; overflow:hidden; background: linear-gradient(120deg, #ffe6f0, #ffd6e8, #ffc2dc); min-height:100vh; padding:40px 20px;">
 
-    <button class="tile" onclick="reveal(this, 'Your eyes sparkle when you laugh ✨')">Click me</button>
-    <button class="tile" onclick="reveal(this, 'You make my world feel calm 🥺')">Click me</button>
-    <button class="tile" onclick="reveal(this, 'Your presence makes everything better 🌟')">Click me</button>
+    <!-- Floating hearts background -->
+    <div id="hearts-bg-page3"></div>
 
-    <button class="yes" onclick="goTo('page4')">Open Love Letter 💌</button>
+    <!-- Title -->
+    <h2 class="page3-title">I love the way... 💕</h2>
+
+    <!-- Love note buttons -->
+    <div class="tiles-container">
+        <button class="tile" onclick="revealLove(this,'Your eyes sparkle when you laugh ✨')">Click me</button>
+        <button class="tile" onclick="revealLove(this,'You make my world feel calm 🥺')">Click me</button>
+        <button class="tile" onclick="revealLove(this,'Your presence makes everything better 🌟')">Click me</button>
+    </div>
+
+    <!-- Navigation -->
+    <button class="yes page3-next" onclick="goTo('page4')">Open Love Letter 💌</button>
 </div>
 
+<style>
+/* PAGE TITLE */
+.page3-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 48px;
+    color: #ff4d6d;
+    text-align: center;
+    margin-bottom: 40px;
+    animation: floatTitle 3s ease-in-out infinite alternate;
+}
+@keyframes floatTitle {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-10px); }
+}
+
+/* TILES / BUTTONS */
+.tiles-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.tile {
+    background: #fff0f0;
+    border: 2px solid #ff4d6d;
+    border-radius: 20px;
+    padding: 14px 28px;
+    font-family: 'Indie Flower', cursive;
+    font-size: 22px;
+    color: #ff4d6d;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(255,0,80,0.3);
+    transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+}
+.tile:hover {
+    transform: scale(1.1) rotate(-2deg);
+    background: #ffdde6;
+    box-shadow: 0 8px 20px rgba(255,0,80,0.5);
+}
+
+/* SPARKLE BURST */
+.sparkle {
+    position: absolute;
+    font-size: 18px;
+    opacity: 1;
+    animation: sparkleAnim 0.8s forwards;
+    pointer-events: none;
+}
+@keyframes sparkleAnim {
+    0% { transform: scale(0.5) translate(0,0); opacity:1; }
+    50% { transform: scale(1.5) translate(-5px,-40px); opacity:0.8; }
+    100% { transform: scale(0.8) translate(10px,-80px); opacity:0; }
+}
+
+/* NEXT BUTTON */
+.page3-next {
+    display: block;
+    margin: 0 auto;
+    padding: 12px 30px;
+    font-size: 20px;
+    border-radius: 30px;
+    background: #ff4d6d;
+    color: #fff;
+    border: none;
+    box-shadow: 0 5px 15px rgba(255,0,80,0.4);
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s;
+}
+.page3-next:hover {
+    transform: scale(1.1);
+    background: #ff6699;
+}
+
+/* FLOATING HEARTS BACKGROUND */
+#hearts-bg-page3 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    top:0;
+    left:0;
+    overflow: hidden;
+    z-index:0;
+}
+.floating-heart-page3 {
+    position: absolute;
+    font-size: 18px;
+    opacity: 0;
+    animation: floatHeartPage3 6s linear forwards;
+    z-index:0;
+}
+@keyframes floatHeartPage3 {
+    0% { transform: translateY(0) scale(0.5); opacity:0; }
+    10% { opacity:1; }
+    100% { transform: translateY(-600px) scale(1.2); opacity:0; }
+}
+</style>
+
+<script>
+// FLOATING HEARTS BACKGROUND
+
+
+// REVEAL LOVE TEXT & SPARKLE BURST
+function revealLove(btn, text){
+    if(btn.disabled) return;
+    btn.disabled = true;
+
+    // Animate text reveal inside button
+    btn.innerText = text;
+    btn.style.transition = "transform 0.3s";
+    btn.style.transform = "scale(1.2)";
+    setTimeout(()=> btn.style.transform = "scale(1)",300);
+
+    // Sparkle burst
+    const sparkleCount = 6;
+    for(let i=0;i<sparkleCount;i++){
+        const sparkle = document.createElement("div");
+        sparkle.className = "sparkle";
+        sparkle.innerText = ["✨","💖","💞","💘"][Math.floor(Math.random()*4)];
+        const rect = btn.getBoundingClientRect();
+        sparkle.style.left = (Math.random()*rect.width + rect.left) + "px";
+        sparkle.style.top = (Math.random()*rect.height + rect.top) + "px";
+        sparkle.style.fontSize = (12 + Math.random()*12) + "px";
+        document.body.appendChild(sparkle);
+        setTimeout(()=> sparkle.remove(),800);
+    }
+}
+</script>
+
+
+
 <!-- PAGE 4 : LOVE LETTER -->
-<div id="page4" class="page" style="position:relative; overflow:hidden; background:#ffe6f0;">
+<div id="page4" class="page" style="position:relative; overflow:hidden; background:#ffe6f0; padding:40px 20px;">
 
-    <!-- Romantic background glow -->
-    <div class="background-glow"></div>
-
-    <!-- Floating hearts and sparkles -->
+    <!-- Floating hearts container -->
     <div id="hearts-container-page4"></div>
-    <div id="sparkle-container-page4"></div>
 
-    <!-- Book container -->
-    <div class="book-container">
-        <!-- Each "page" of the letter -->
-        <div class="letter-page active">
+    <!-- Letter content -->
+    <div class="letter-container">
+        <div class="paper letter-page active">
             <h2 class="title-animated">My Love 💖</h2>
             <p class="animated-text">The first time I saw you was in high school, but we never spoke. Maybe God had a plan for us, even then.</p>
             <p class="animated-text">Maybe it was for the better that we didn’t talk back then. Because what happened later was meant to be. And now, I feel like every moment before was just preparing us for this.</p>
         </div>
 
-        <div class="letter-page">
+        <div class="paper letter-page">
             <p class="animated-text">After our bachelors, we met again. It started so simply. A small “Happy Birthday” message. No one would have guessed that such a tiny moment would change everything.</p>
             <p class="animated-text">Those small talks, those snaps, they were the beginning of something beautiful. I am a shy person, and I never imagined I would dare to talk to a girl let alone propose. WOW! Your “yes” was like a gentle spark in my heart. It made me feel alive in a way I never felt before. Even though we didn’t meet often in person, the connection we built felt real and strong.</p>
         </div>
 
-        <div class="letter-page">
+        <div class="paper letter-page">
             <p class="animated-text">Every time I think of you, I can still feel your presence. Your smile, your eyes, your voice. Everything about you stays with me. Those moments we shared are precious, and I keep them close like a treasure.</p>
             <p class="animated-text">Now we are facing the long distance. It has been two years, and it has not been easy. But I believe this is only a test, and we will pass it.</p>
         </div>
 
-        <div class="letter-page">
+        <div class="paper letter-page">
             <p class="animated-text">I know the distance will end soon. When it does, we will be stronger than ever. I am waiting for the day I can hold you again. The same way I did the first time, when my heart felt like it would burst.</p>
             <p class="animated-text">I miss you every day. And I love you more than words can say.</p>
-            <img src="loveletter.jpeg" alt="Love Letter Photo" class="photo animated-text stay-visible">
+            <img src="loveletter.jpeg" alt="Love Letter Photo" class="photo">
             <p class="animated-text" style="margin-top:18px;">Always yours,<br><b>Yejju</b></p>
+            <button class="yes" onclick="goTo('page5')">You want to see my Dreams?</button>
         </div>
     </div>
 
@@ -276,60 +556,26 @@ for (let i = 0; i < 20; i++) {
         <button id="prevPage">← Previous</button>
         <button id="nextPage">Next →</button>
     </div>
+
 </div>
 
 <style>
-/* PAGE BACKGROUND */
-#page4 {
-    font-family: 'Indie Flower', cursive;
-    min-height: 100vh;
-    padding: 40px 20px;
-    background: radial-gradient(circle at top left, #ffe6f0, #ffc2dc);
-    color: #800040; 
-    overflow: hidden;
-}
-
-/* Background glow animation */
-.background-glow {
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    top: -50%;
-    left: -50%;
-    background: radial-gradient(circle, rgba(255,200,220,0.3), rgba(255,180,200,0.1));
-    animation: glowPulse 6s infinite alternate;
-    z-index:0;
-}
-
-@keyframes glowPulse {
-    from { transform: scale(1); opacity: 0.6; }
-    to { transform: scale(1.05); opacity: 0.9; }
-}
-
-/* BOOK CONTAINER */
-.book-container {
-    max-width: 700px;
-    margin: 50px auto 20px auto;
-    position: relative;
-    z-index:1;
-}
-
-/* LETTER PAGE */
-.letter-page {
-    display: none;
-    background: rgba(255,255,255,0.95);
+/* PAPER STYLE */
+.paper {
+    background: url('paper-texture.jpeg');
+    background-size: cover;
     padding: 30px 40px;
-    border-radius: 20px;
-    box-shadow: 0 15px 40px rgba(255,50,100,0.25);
-    animation: fadeInPage 0.8s ease forwards;
-    color: #800040;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    margin-bottom: 30px;
+    position: relative;
 }
 
-.letter-page.active {
-    display: block;
-}
+/* Only active page visible */
+.letter-page { display: none; }
+.letter-page.active { display: block; }
 
-/* Title shimmer animation */
+/* TITLE ANIMATION */
 .title-animated {
     font-family: 'Great Vibes', cursive;
     font-size: 48px;
@@ -338,19 +584,15 @@ for (let i = 0; i < 20; i++) {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: shimmer 4s linear infinite;
+    text-align: center;
 }
 
-/* Fade animation for text */
+/* TEXT ANIMATION */
 .animated-text {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: textFadeUp 1s forwards;
-}
-.letter-page.active .animated-text {
-    animation-delay: 0.3s;
-}
-@keyframes textFadeUp {
-    to { opacity:1; transform: translateY(0);}
+    font-family: 'Indie Flower', cursive;
+    font-size: 20px;
+    line-height: 1.6em;
+    color: #800040;
 }
 
 /* IMAGE EFFECT */
@@ -361,22 +603,31 @@ for (let i = 0; i < 20; i++) {
     box-shadow: 0 8px 20px rgba(0,0,0,0.25);
     animation: popBounce 1s ease forwards;
 }
-.photo.stay-visible {
-    opacity:1 !important;
-}
 
-/* Pop bounce animation */
-@keyframes popBounce {
-    0% { transform: scale(0.7); opacity:0; }
-    50% { transform: scale(1.05); opacity:1; }
-    100% { transform: scale(1); }
+/* BUTTON */
+button.yes {
+    display:block;
+    margin: 30px auto 0;
+    padding: 12px 28px;
+    background: #ff4d6d;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(255,0,80,0.4);
+    transition: transform 0.2s, background 0.3s;
+}
+button.yes:hover {
+    transform: scale(1.1);
+    background: #ff6699;
 }
 
 /* PAGE NAVIGATION */
 .page-nav {
     text-align: center;
-    margin-top: 30px;
-    z-index: 2;
+    margin-top: 20px;
+    z-index:2;
 }
 .page-nav button {
     background: #ff4d6d;
@@ -410,58 +661,70 @@ for (let i = 0; i < 20; i++) {
     position: absolute;
     font-size: 20px;
     opacity:0;
-    animation: floatHeartPage4 6s linear forwards;
+    animation: floatHeartPage4 10s linear forwards;
 }
 
 @keyframes floatHeartPage4 {
     0% { transform: translateY(0) scale(0.5); opacity:0; }
     10% { opacity:1; }
-    100% { transform: translateY(-600px) scale(1.2); opacity:0; }
+    100% { transform: translateY(-1000px) scale(1.3); opacity:0; }
 }
 
-/* PAGE FLIP FADE */
-@keyframes fadeInPage {
-    from {opacity:0; transform: translateY(20px) scale(0.95);}
-    to {opacity:1; transform: translateY(0) scale(1);}
+@keyframes shimmer {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+@keyframes popBounce {
+    0% { transform: scale(0.7); opacity:0; }
+    50% { transform: scale(1.05); opacity:1; }
+    100% { transform: scale(1); }
 }
 </style>
 
 <script>
-// PAGE FLIP LOGIC
+// STACKED PAGE NAVIGATION
 const pages = document.querySelectorAll("#page4 .letter-page");
 let currentPage = 0;
 
-document.getElementById("nextPage").addEventListener("click", () => {
+function showPage(index){
+    pages.forEach((p,i)=>p.classList.remove("active"));
+    pages[index].classList.add("active");
+}
+
+document.getElementById("nextPage").addEventListener("click", ()=>{
     if(currentPage < pages.length - 1){
-        pages[currentPage].classList.remove("active");
         currentPage++;
-        pages[currentPage].classList.add("active");
+        showPage(currentPage);
     } else {
-        goTo('page5'); // move to dreams page
+        // Last page → go to page5
+        goTo('page5');
     }
 });
 
-document.getElementById("prevPage").addEventListener("click", () => {
+document.getElementById("prevPage").addEventListener("click", ()=>{
     if(currentPage > 0){
-        pages[currentPage].classList.remove("active");
         currentPage--;
-        pages[currentPage].classList.add("active");
+        showPage(currentPage);
     }
 });
 
-// Floating hearts effect
+// FLOATING HEARTS
 function spawnHeartPage4() {
     const container = document.getElementById("hearts-container-page4");
     const heart = document.createElement("div");
     heart.className = "floating-heart-page4";
     heart.innerText = ["💖","💞","💘","💝"][Math.floor(Math.random()*4)];
-    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.left = Math.random() * (window.innerWidth - 50) + "px";
     heart.style.fontSize = (16 + Math.random()*12) + "px";
     container.appendChild(heart);
-    setTimeout(()=>heart.remove(),6000);
+    setTimeout(()=>heart.remove(),10000);
 }
-setInterval(spawnHeartPage4, 600);
+setInterval(spawnHeartPage4, 800);
 </script>
+
+
+
 
 
 
